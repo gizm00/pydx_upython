@@ -10,21 +10,24 @@ Converts a png image to an array.
 Requires numpy
 """
 
+file_name = 'images/pusheen_sm.png'
 # 1bit-logo.png was taken from the micropython repo
 # https://github.com/micropython/micropython/tree/master/logo
-img = Image.open('tiny_pydx.png').convert('RGBA')  # Red, Green, Blue, Alpha
+img = Image.open(file_name).convert('RGBA')  # Red, Green, Blue, Alpha
 arr = np.array(img)
 
 # record the original shape
 # shape = arr.shape  # 48px x 48px x 4rgba
 
 pic = []
+#print arr
 # Remove the alpha an reduce to 1s and 0s
 for row in arr:
     out_row = []
     for pixel in row:
         val = 1
-        if pixel[0] > 0:
+	#print pixel
+        if pixel[0] < 200:
             val = 0
         out_row.append(val)
     pic.append(out_row)
@@ -40,6 +43,6 @@ for x, row in enumerate(pic):
     pic_out.append(col_str)
 
 # Pretty print
-print "pic=["
-print ',\n'.join(pic_out)
-print "]"
+#print "pic=["
+print '\n'.join(pic_out)
+#print "]"
