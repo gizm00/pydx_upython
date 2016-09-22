@@ -9,7 +9,7 @@ def draw_image(file_name):
 			for char in line:
 				if char == '1':
 					print('x,y' + str(x) + ',' + str(y))
-					framebuf1.pixel(x,y,1)
+					framebuf1.pixel(y,x,1)
 					gc.collect()
 				y = y+1
 			x = x+1
