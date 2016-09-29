@@ -1,4 +1,5 @@
-def draw_image(file_name):
+import gc
+def draw_image(file_name, framebuf1, buffer, lcd):
 
 	gc.collect()
 	x = 0
@@ -8,7 +9,7 @@ def draw_image(file_name):
 			y=0
 			for char in line:
 				if char == '0':
-					print('x,y' + str(x) + ',' + str(y))
+					#print('x,y' + str(x) + ',' + str(y))
 					framebuf1.pixel(y,x,1)
 					gc.collect()
 				y = y+1
