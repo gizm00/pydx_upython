@@ -1,6 +1,8 @@
 import gc
 def draw_image(file_name, framebuf1, buffer, lcd):
 
+	framebuf1.fill(0)
+	lcd.data(buffer)
 	gc.collect()
 	x = 0
 	y = 0
