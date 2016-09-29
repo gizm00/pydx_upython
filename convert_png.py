@@ -2,7 +2,7 @@
 # with a modification to set the val=0 if there is image data
 
 import numpy as np
-import Image
+import image
 import sys
 
 """
