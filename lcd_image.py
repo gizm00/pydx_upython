@@ -25,21 +25,23 @@ framebuf1 = framebuf.FrameBuffer1(buffer, width, height)
 
 gc.collect()
 
-def draw_image(pic):
+def draw_image(file_name):
 
-        row_chunk = 10
-        num_rows = len(pic)
-        row_groups= math.ceil(num_rows/row_chunk)
         gc.collect()
-        for group_offset in range(0,row_groups-1):
-                gc.collect()
-                for x, row in enumerate(pic[0:row_chunk]):
-                        for y, col in enumerate(row):
-                                if col == '1':
-                                        framebuf1.pixel(x+group_offset*row_chunk,y,1)
+        x = 0
+        y = 0
+        with open(file_name) as f:
+                for line in f:
+                        y=0
+                        for char in line:
+                                if char == '0':
+                                        print('x,y' + str(x) + ',' + str(y))
+                                        framebuf1.pixel(y,x,1)
+                                        gc.collect()
+                                y = y+1
+                        x = x+1
 
                 gc.collect()
+                print('sending to lcd')
                 lcd.data(buffer)
-                pic = pic[row_chunk+1:]
                 gc.collect()
-
