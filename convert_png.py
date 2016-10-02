@@ -10,7 +10,7 @@ Converts a png image to an array.
 Requires numpy
 """
 
-file_name = 'images/pusheen_sm.png'
+file_name = 'images/hello_kitty_small.png'
 # 1bit-logo.png was taken from the micropython repo
 # https://github.com/micropython/micropython/tree/master/logo
 img = Image.open(file_name).convert('RGBA')  # Red, Green, Blue, Alpha
