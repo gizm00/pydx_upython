@@ -1,1 +1,4 @@
-*.bak~
+.ipynb_checkpoints/
+Untitled.ipynb
+__pycache__/*
+.bak~

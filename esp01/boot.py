@@ -7,6 +7,11 @@ gc.collect()
 from setup_lcd import *
 from draw_image_from_file import *
 gc.collect()
+
+
+from http_server import *
+gc.collect()
 import webrepl
 webrepl.start()
 gc.collect()
+main(framebuf1, buffer, lcd)
