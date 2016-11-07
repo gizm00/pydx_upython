@@ -34,7 +34,7 @@ You will want something like this [USB to TTL board](http://www.dx.com/p/ft232bl
 #### Step 2, setup the board to flash the MicroPython firmware
 
 For the ESP-12, the following setup is required to flash the device. Namely, you need to ground GPIO0 and GPIO5. Make sure CH_PD is high.
-<img='photos/esp12_firmware_flash.png'>
+<img src='photos/esp12_firmware_flash.png'>
 This photo is from [agcross.com](http://www.agcross.com/2015/09/the-esp8266-wifi-chip-part-3-flashing-custom-firmware)
 
 
