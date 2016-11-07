@@ -10,11 +10,11 @@ The Internet of cats is an access point for 1-bit cat pictures. A (very very sim
 <img src = 'photos/pusheen_request.png'>
 
 #### What! Thats amazing. How to I make one?
- I'm glad you asked! Feel free to follow along with my simple [step-by-step](http://www.homestarrunner.com/sbemail58.html) instructions.
+ I'm glad you asked! Feel free to follow along with my simple [step-by-step](http://www.homestarrunner.com/sbemail58.html) instructions. If you have any questions or problems please file an issue and I'll take a look.
 
 But first! Thanks to the following folks for sharing their code and how-tos. This project would not have been possible without them.
 
-<li>[Instructions for connecting the ESP-01 to the Nokia 5110 rom Kendrick Tabi](https://www.kendricktabi.com/2015/08/esp8266-and-nokia-5110-lcd.html)
+<li>[Instructions for connecting the ESP-01 to the Nokia 5110 from Kendrick Tabi](https://www.kendricktabi.com/2015/08/esp8266-and-nokia-5110-lcd.html)
 <li>[upcd8544.py by Markus Birth via Mike Causer](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life]upcd8544.py)
 <li>[convert_png.py by Gary Bake](https://github.com/garybake/upython_wemos_shields/blob/master/oled/convert_png.py)
 <li>http_server.py is based on [this example](https://github.com/micropython/micropython/tree/master/examples/network) from the MicroPython repo
@@ -33,8 +33,51 @@ You will want something like this [USB to TTL board](http://www.dx.com/p/ft232bl
 
 #### Step 2, setup the board to flash the MicroPython firmware
 
-For the ESP-12, the following setup is required to flash the device. Namely, you need to ground GPIO0 and GPIO5. Make sure CH_PD is high.  
-<img src='photos/esp12_firmware_flash.png'>  
+You need to put the ESP8266 into boot loader mode to flash the MicroPython firmware. Heres how to do it.
+
+For the ESP-12, the following setup is required to flash the device. Namely, you need to ground GPIO0 and GPIO5. Make sure CH_PD is high.
+<img src='photos/esp12_firmware_flash.png'>
 This photo is from [agcross.com](http://www.agcross.com/2015/09/the-esp8266-wifi-chip-part-3-flashing-custom-firmware)
 
+For the ESP-01, you can [follow this pinout from Sparkfun](https://cdn.sparkfun.com/datasheets/Wireless/WiFi/ESP8266ModuleV1.pdf) for basic pin descriptions. I printed it out so I could reference it while working.  To setup the ESP-01 configure the pins as described in [this table](https://github.com/esp8266/esp8266-wiki/wiki/Uploading), specifically CH_PD and GPIO2 should be high, and GPIO0 should be low. There is no GPIO15 on the ESP-01, so ignore that.
 
+#### Step 3, flash the firmware
+Now that you've setup your device in bootmode, get the latest micropython firmware and send it to the device.
+
+To do this you will need
+<li>The [latest micropython firmware for the ESP8266](http://micropython.org/download#esp8266)
+<li>The [esptool](github.com/themadinventor/esptool/) for sending the firmware to the device:
+>pip install esptool
+
+At this point you need to connect the ESP8266 to the USB port if you haven't already to communicate over the RX/TX lines
+
+First, erase the flash
+>esptool.py --port /dev/ttyUSB0 erase_flash
+
+Unplug and replug in the 8266. If you dont you might see the following if you proceed immediately to flashing the board:
+
+> “A fatal error occurred: Failed to connect to ESP8266”
+
+Next, load the flash. Depending on your USB port configuration and what other peripherals you have plugged in, the ESP8266 may not be on /dev/ttyUSB0 as indicated in the esptool command line below. To check, unplug the 8266 and run 
+> ls /dev/ttyUSB*
+
+If this returns 'No such file or directory' then great, your ESP8266 is the only thing you are plugging in, so it should be easy to figure out what port it is on.
+
+Plug in the 8266 and run the 'ls' command again, noting the difference between the USB ports mounted now. The ttyUSB* entry that is mounted after plugging in the 8266 is the one you need to use below. 
+
+Replace 'latest-firmware.bin' with the name of the firmware you downloaded.  
+
+>esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=8m 0 latest-firmware.bin
+
+If this completed without complaining, congrats! You've flashed the firmware. Unplug / replug in the ESP8266 and open a terminal to test the install
+
+####Step 4, connect to the REPL on the board
+Open up a terminal and type the following, changing the USB port to the correct one for your setup:
+
+>screen /dev/ttyUSB0 115200
+
+You should see something like the following:
+
+<img src='photos/repl.png'>
+
+If not, you may need to try flashing again. Signs that I've had to reflash include errors about FAT 32 file system corruption, or fatal errors resulting in a scrolling sea of code spew. 
