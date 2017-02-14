@@ -156,7 +156,8 @@ If you'd like, you can use the chdir.py code on the ESP8266 to create a 'cats' d
 
 Now update the boot.py file to import draw_image_from_file:
 
-```import gc
+```
+import gc
 gc.collect()
 
 from setup_lcd import *
@@ -224,6 +225,8 @@ webrepl.start()
 gc.collect()
 main(framebuf1, buffer1, lcd)
 ```
+
+You can either update your boot.py or use the final one from the [esp01 folder](https://github.com/gizm00/pydx_upython/blob/master/code/esp01/boot.py). The difference between the ESP-12 and ESP-01 is in the setup_lcd and upcd8544 code, the boot.py files are interchangeable.  
 
 A warning about memory; sometimes I found that the memory required by the modules exceeded the heap available on the ESP8266. When that happens I would sometimes see the following error when rebooting the ESP8266:
 
