@@ -47,19 +47,19 @@ Now that you've setup your device in bootmode, get the latest micropython firmwa
 To do this you will need
 <li>The [latest micropython firmware for the ESP8266](http://micropython.org/download#esp8266)
 <li>The [esptool](github.com/themadinventor/esptool/) for sending the firmware to the device:
->pip install esptool
+>$ pip install esptool
 
 At this point you need to connect the ESP8266 to the USB port if you haven't already to communicate over the RX/TX lines
 
 First, erase the flash
->esptool.py --port /dev/ttyUSB0 erase_flash
+>$ esptool.py --port /dev/ttyUSB0 erase_flash
 
 Unplug and replug in the 8266. If you dont you might see the following if you proceed immediately to flashing the board:
 
 > “A fatal error occurred: Failed to connect to ESP8266”
 
 Next, load the flash. Depending on your USB port configuration and what other peripherals you have plugged in, the ESP8266 may not be on /dev/ttyUSB0 as indicated in the esptool command line below. To check, unplug the 8266 and run 
-> ls /dev/ttyUSB*
+>$ ls /dev/ttyUSB*
 
 If this returns 'No such file or directory' then great, your ESP8266 is the only thing you are plugging in, so it should be easy to figure out what port it is on.
 
@@ -67,17 +67,40 @@ Plug in the 8266 and run the 'ls' command again, noting the difference between t
 
 Replace 'latest-firmware.bin' with the name of the firmware you downloaded.  
 
->esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=8m 0 latest-firmware.bin
+>$ esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=8m 0 latest-firmware.bin
 
 If this completed without complaining, congrats! You've flashed the firmware. Unplug / replug in the ESP8266 and open a terminal to test the install
 
 ####Step 4, connect to the REPL on the board
 Open up a terminal and type the following, changing the USB port to the correct one for your setup:
 
->screen /dev/ttyUSB0 115200
+>$ screen /dev/ttyUSB0 115200
 
 You should see something like the following:
 
 <img src='photos/repl.png'>
 
 If not, you may need to try flashing again. Signs that I've had to reflash include errors about FAT 32 file system corruption, or fatal errors resulting in a scrolling sea of code spew. 
+
+Assuming you saw the picture above, you can now write Python to execute on the ESP8266!  Try typing some simple Python commands in the window. You should see the blue light on the ESP blinking as you type and execute commands.
+
+####Step 5, starting WEBREPL and configuring the ESP8266 Access Point
+MicroPython has this nifty web interface for programming your micro controller:
+
+<img src='photos/webrepl.png'>
+Mike Causer does a great job of stepping through setting up the access point and configuring WEBREPL, which you can [read here](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life#configure-access-point). If you 
+
+#### At this point, the instructions diverge based on which version of the ESP8266 you have.
+The ESP-12 has more GPIO pins, so we can proceed piecemeal, testing the code we are uploading as we go along. Because the ESP-01 has fewer GPIOs, we will have to re-purpose some of the pins to use to drive the display, meaning we have to upload all the code required at once and then re-configure the board connections to drive the display. Don't worry if this doesn't make sense in prose, it will (hopefully!) as we walk through how to approach each.
+
+### ESP-12
+
+####Connecting the display
+To connect the ESP-12 to the Nokia 5110 [follow this pin connection table from Mike Causer](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life#setup-and-test-nokia-5110-display).  We will test out the display after copying over the LCD files
+
+####Copying the LCD files to the ESP8266
+For this step, you will want to clone this repo locally
+>$ git clone https://github.com/gizm00/pydx_upython.git
+>$ cd pydx_upython/code/esp12
+
+We will copy over upcd8544.py, the driver for the Nokia 5110, and setup_lcd.py, the code for interacting with files. Using the 'Send a File' box in the WEBREPL window, choose and send these two files to the device. You will see '[filename] sent, nnnn bytes' in the status window when the file has been transferred.
