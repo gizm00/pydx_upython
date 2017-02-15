@@ -16,28 +16,26 @@ The Internet of cats is an access point for 1-bit cat pictures. A (very very sim
 
 But first! Thanks to the following folks for sharing their code and how-tos. This project would not have been possible without them.
 
-<li>[Instructions for connecting the ESP-01 to the Nokia 5110 from Kendrick Tabi](https://www.kendricktabi.com/2015/08/esp8266-and-nokia-5110-lcd.html)
-<li>[upcd8544.py by Markus Birth via Mike Causer](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life]upcd8544.py)
-<li>[convert_png.py by Gary Bake](https://github.com/garybake/upython_wemos_shields/blob/master/oled/convert_png.py)
-<li>http_server.py is based on [this example](https://github.com/micropython/micropython/tree/master/examples/network) from the MicroPython repo  
+* [Instructions for connecting the ESP-01 to the Nokia 5110 from Kendrick Tabi](https://www.kendricktabi.com/2015/08/esp8266-and-nokia-5110-lcd.html)
+* [upcd8544.py by Markus Birth via Mike Causer](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life]upcd8544.py)
+* [convert_png.py by Gary Bake](https://github.com/garybake/upython_wemos_shields/blob/master/oled/convert_png.py)
+* http_server.py is based on [this example](https://github.com/micropython/micropython/tree/master/examples/network) from the MicroPython repo  
 
 
-<ol>
-  <li>[Get the hardware](#get-the-hardware)</li>
-  <li>[Setup the ESP8266 for flashing](#flashing)</li>
-  <li>[Flash the MicroPython firmware](#micropython)</li>
-  <li>[Connect to the REPL and try some Python!](#repl)</li>
-  <li>[WEBREPL setup](#webrepl)</li>
+1. [Get the hardware](#step-1-get-the-hardware)
+2. [Setup the ESP8266 for flashing](#flashing)
+3. [Flash the MicroPython firmware](#micropython)
+4. [Connect to the REPL and try some Python!](#repl)
+5. [WEBREPL setup](#webrepl)
   <br>
   Setup the Nokia 5110 display
-  <ul>[Display setup for the ESP-12](#esp12)</ul>
-  <ul>[Display setup for the ESP-01 (Coming Soon)](#esp01)</ul>
-  <li>[Translating images to bitmaps]("#bitmap")</li>
-  <li>[Drawing cat bitmaps on the display]("#drawcats")</li>
-  <li>[Setup the cat server]("#internet")
-</ol>
+      * [Display setup for the ESP-12](#esp12)
+      * [Display setup for the ESP-01 (Coming Soon)](#esp01)
+6. [Translating images to bitmaps]("#bitmap")
+7. [Drawing cat bitmaps on the display]("#drawcats")
+8. [Setup the cat server]("#internet")
 
-#### Get the hardware
+#### Step 1 get the hardware
 
 I prototyped this project using the [ESP-12](http://www.gearbest.com/transmitters-receivers-module/pp_227650.html) and later built a portable version with the [ESP-01](https://www.sparkfun.com/products/13678). The code folder in the repo has separate sub folders depending on which version of the ESP8266 you use. If I were to do it over again, I would probably use a breakout board like [this one from Adafruit](https://www.adafruit.com/product/2821). It would have saved me some debug and soldering time when adding an external supply and powering the chip. Adafruit also has some fantastic ESP8266 tutorials.
 
