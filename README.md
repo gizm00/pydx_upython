@@ -21,7 +21,7 @@ But first! Thanks to the following folks for sharing their code and how-tos. Thi
 * [convert_png.py by Gary Bake](https://github.com/garybake/upython_wemos_shields/blob/master/oled/convert_png.py)
 * http_server.py is based on [this example](https://github.com/micropython/micropython/tree/master/examples/network) from the MicroPython repo  
 
-
+#### Instructions
 1. [Get the hardware](#step-1-get-the-hardware)
 2. [Setup the ESP8266 for flashing](#flashing)
 3. [Flash the MicroPython firmware](#micropython)
