@@ -23,7 +23,7 @@ But first! Thanks to the following folks for sharing their code and how-tos. Thi
 
 
 <ol>
-  <li>[Get the hardware](#step-1,-get-thehardware)</li>
+  <li>[Get the hardware](#get-the-hardware)</li>
   <li>[Setup the ESP8266 for flashing](#flashing)</li>
   <li>[Flash the MicroPython firmware](#micropython)</li>
   <li>[Connect to the REPL and try some Python!](#repl)</li>
@@ -37,7 +37,7 @@ But first! Thanks to the following folks for sharing their code and how-tos. Thi
   <li>[Setup the cat server]("#internet")
 </ol>
 
-####Step 1, get the hardware
+#### Get the hardware
 
 I prototyped this project using the [ESP-12](http://www.gearbest.com/transmitters-receivers-module/pp_227650.html) and later built a portable version with the [ESP-01](https://www.sparkfun.com/products/13678). The code folder in the repo has separate sub folders depending on which version of the ESP8266 you use. If I were to do it over again, I would probably use a breakout board like [this one from Adafruit](https://www.adafruit.com/product/2821). It would have saved me some debug and soldering time when adding an external supply and powering the chip. Adafruit also has some fantastic ESP8266 tutorials.
 
