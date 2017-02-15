@@ -26,11 +26,10 @@ But first! Thanks to the following folks for sharing their code and how-tos. Thi
 2. [Setup the ESP8266 for flashing](#flashing)
 3. [Flash the MicroPython firmware](#micropython)
 4. [Connect to the REPL and try some Python!](#repl)
-5. [WEBREPL setup](#webrepl)
-  <br>
+5. [WEBREPL setup](#webrepl)  
   Setup the Nokia 5110 display  
-      * [Display setup for the ESP-12](#esp12)  
-      * [Display setup for the ESP-01 (Coming Soon)](#esp01)  
+    * [Display setup for the ESP-12](#esp12)  
+    * [Display setup for the ESP-01 (Coming Soon)](#esp01)  
 6. [Translating images to bitmaps](#bitmap)  
 7. [Drawing cat bitmaps on the display](#drawcats)  
 8. [Setup the cat server](#internet)  
