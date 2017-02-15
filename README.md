@@ -19,9 +19,25 @@ But first! Thanks to the following folks for sharing their code and how-tos. Thi
 <li>[Instructions for connecting the ESP-01 to the Nokia 5110 from Kendrick Tabi](https://www.kendricktabi.com/2015/08/esp8266-and-nokia-5110-lcd.html)
 <li>[upcd8544.py by Markus Birth via Mike Causer](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life]upcd8544.py)
 <li>[convert_png.py by Gary Bake](https://github.com/garybake/upython_wemos_shields/blob/master/oled/convert_png.py)
-<li>http_server.py is based on [this example](https://github.com/micropython/micropython/tree/master/examples/network) from the MicroPython repo
+<li>http_server.py is based on [this example](https://github.com/micropython/micropython/tree/master/examples/network) from the MicroPython repo  
 
-#### Step 1, get the hardware
+
+<ol>
+  <li>[Get the hardware](#hardware)</li>
+  <li>[Setup the ESP8266 for flashing](#flashing)</li>
+  <li>[Flash the MicroPython firmware](#micropython)</li>
+  <li>[Connect to the REPL and try some Python!](#repl)</li>
+  <li>[WEBREPL setup](#webrepl)</li>
+  <br>
+  Setup the Nokia 5110 display
+  <ul>[Display setup for the ESP-12](#esp12)</ul>
+  <ul>[Display setup for the ESP-01 (Coming Soon)](#esp01)</ul>
+  <li>[Translating images to bitmaps]("#bitmap")</li>
+  <li>[Drawing cat bitmaps on the display]("#drawcats")</li>
+  <li>[Setup the cat server]("#internet")
+</ol>
+
+#### <a id="#hardware">Step 1, get the hardware</a>
 
 I prototyped this project using the [ESP-12](http://www.gearbest.com/transmitters-receivers-module/pp_227650.html) and later built a portable version with the [ESP-01](https://www.sparkfun.com/products/13678). The code folder in the repo has separate sub folders depending on which version of the ESP8266 you use. If I were to do it over again, I would probably use a breakout board like [this one from Adafruit](https://www.adafruit.com/product/2821). It would have saved me some debug and soldering time when adding an external supply and powering the chip. Adafruit also has some fantastic ESP8266 tutorials.
 
@@ -33,7 +49,7 @@ For connecting to the board, you will need a USB to TTY cable if you are just us
 
 You will want something like this [USB to TTL board](http://www.dx.com/p/ft232bl-module-usb-to-ttl-board-module-support-5v-3-3v-421177#.WCC5UhIrK1s) that has a 3V supply based on how you set the jumper.
 
-#### Step 2, setup the board to flash the MicroPython firmware
+#### <a id="flashing">Step 2, setup the board to flash the MicroPython firmware</a>
 
 You need to put the ESP8266 into boot loader mode to flash the MicroPython firmware. Heres how to do it.
 
@@ -43,7 +59,7 @@ This photo is from [agcross.com](http://www.agcross.com/2015/09/the-esp8266-wifi
 
 For the ESP-01, you can [follow this pinout from Sparkfun](https://cdn.sparkfun.com/datasheets/Wireless/WiFi/ESP8266ModuleV1.pdf) for basic pin descriptions. I printed it out so I could reference it while working.  To setup the ESP-01 configure the pins as described in [this table](https://github.com/esp8266/esp8266-wiki/wiki/Uploading), specifically CH_PD and GPIO2 should be high, and GPIO0 should be low. There is no GPIO15 on the ESP-01, so ignore that.
 
-#### Step 3, flash the firmware
+#### <a id="micropython">Step 3, flash the firmware</a>
 Now that you've setup your device in bootmode, get the latest micropython firmware and send it to the device.
 
 To do this you will need
@@ -73,7 +89,7 @@ Replace 'latest-firmware.bin' with the name of the firmware you downloaded.
 
 If this completed without complaining, congrats! You've flashed the firmware. Unplug / replug in the ESP8266 and open a terminal to test the install
 
-####Step 4, connect to the REPL on the board
+####<a id="repl">Step 4, connect to the REPL on the board</a>
 Open up a terminal and type the following, changing the USB port to the correct one for your setup:
 
 >$ screen /dev/ttyUSB0 115200
@@ -86,7 +102,7 @@ If not, you may need to try flashing again. Signs that I've had to reflash inclu
 
 Assuming you saw the picture above, you can now write Python to execute on the ESP8266!  Try typing some simple Python commands in the window. You should see the blue light on the ESP blinking as you type and execute commands.
 
-####Step 5, starting WEBREPL and configuring the ESP8266 Access Point
+####<a id="webrepl">Step 5, starting WEBREPL and configuring the ESP8266 Access Point</a>
 MicroPython has this nifty web interface for programming your micro controller:
 
 <img src='photos/webrepl.png'>
@@ -106,7 +122,7 @@ When the ESP8266 starts up it will read the boot.py file, which will now import 
 #### At this point, the instructions diverge based on which version of the ESP8266 you have.
 The ESP-12 has more GPIO pins, so we can proceed piecemeal, testing the code we are uploading as we go along. Because the ESP-01 has fewer GPIOs, we will have to re-purpose some of the pins to use to drive the display, meaning we have to upload all the code required at once and then re-configure the board connections to drive the display. Don't worry if this doesn't make sense in prose, it will (hopefully!) as we walk through how to approach each.
 
-### ESP-12
+### <a id="esp12">ESP-12</a>
 
 ####Connecting the display
 To connect the ESP-12 to the Nokia 5110 [follow this pin connection table from Mike Causer](https://github.com/mcauser/MicroPython-ESP8266-Nokia-5110-Conways-Game-of-Life#setup-and-test-nokia-5110-display).  We will test out the display after copying over the LCD files
@@ -133,7 +149,7 @@ Fill the display:
 >$ lcd.data(framebuf1)
 
 
-### ESP-01
+###<a id="esp01"> ESP-01</a>
 Coming soon, need to get a drawing of the wiring diagram for connecting the ESP-01 to the 5110.
 
 
@@ -143,10 +159,10 @@ For this step, you will want to clone this repo locally
 >$ cd pydx_upython/code/esp01
 
 
-####Step 6, image translation
+####<a id="bitmap">Step 6, image translation</a>
 We cant just send an image file to the 5110, first we need to convert it to a 1-bit bitmap. You can use the [pre-converted bitmaps](https://github.com/gizm00/pydx_upython/tree/master/cat_text_files) or, to make your own, follow the instructions on slides 19-22 from [the presentation](https://docs.google.com/presentation/d/1AMXmYmvmftAEw1kQI4VNkugeQvjoKlBWJfrvhCs6y2g/edit?usp=sharing)
 
-####Step 7, drawing the cats
+####<a id="drawcats">Step 7, drawing the cats</a>
 Now the exciting part! Drawing the cats. First lets move the cat text files and the drawing code over to the ESP8266
 
 Using WEBREPL, copy over the cat text images you'd like to use to the ESP8266 from the [cat_text_files directory](https://github.com/gizm00/pydx_upython/tree/master/cat_text_files).
@@ -180,7 +196,7 @@ framebuf1, buffer, and lcd should have been created when setup_lcd was loaded by
 <img src ='photos/pusheen_request.png'>  
 
 
-####Step 8, setting up the Internet
+####<a id="internet">Step 8, setting up the Internet</a>
 Now that we've got cat images printing to the LCD, lets setup a very basic HTTP server to allow the cat pics to be requested.
 
 Lets start by taking a look at http_server.py in the [code folder](https://github.com/gizm00/pydx_upython/tree/master/code). Basically, it waits for requests and then checks for a 'cat=' argument.  You can modify this file to add additional cat requests, setting lcd_cat to the corresponding cat text file name:
